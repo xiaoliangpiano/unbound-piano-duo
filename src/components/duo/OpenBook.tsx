@@ -152,7 +152,7 @@ export default function OpenBook({ onClose }: { onClose: () => void }) {
     <div className="flex h-full w-full flex-col items-center justify-center gap-[var(--space-lg)] px-[var(--space-lg)] py-[var(--space-lg)]">
       {/* Desktop — two-page spread with real page-turn */}
       <div
-        className="relative hidden w-full max-w-[1000px] justify-center [perspective:2400px] md:flex"
+        className="duo-book-stage relative hidden w-full max-w-[1000px] justify-center md:flex"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
@@ -233,44 +233,48 @@ export default function OpenBook({ onClose }: { onClose: () => void }) {
               }}
             >
               <div className="duo-flip-face duo-flip-face-front">
-                <Page
-                  number={turn.dir === -1 ? duoSpreads[turn.from].number : undefined}
-                  title={turn.dir === -1 ? duoSpreads[turn.from].title : undefined}
-                  blocks={
-                    turn.dir === 1
-                      ? duoSpreads[turn.from].right
-                      : duoSpreads[turn.from].left
-                  }
-                  showHeading={turn.dir === -1}
-                  justify={
-                    turn.dir === -1
-                      ? leftPageJustify(turn.from)
-                      : rightPageJustify(turn.from)
-                  }
-                  contentAlign={
-                    turn.dir === 1 ? rightContentAlign(turn.from) : "start"
-                  }
-                />
+                <div className="duo-flip-face-content">
+                  <Page
+                    number={turn.dir === -1 ? duoSpreads[turn.from].number : undefined}
+                    title={turn.dir === -1 ? duoSpreads[turn.from].title : undefined}
+                    blocks={
+                      turn.dir === 1
+                        ? duoSpreads[turn.from].right
+                        : duoSpreads[turn.from].left
+                    }
+                    showHeading={turn.dir === -1}
+                    justify={
+                      turn.dir === -1
+                        ? leftPageJustify(turn.from)
+                        : rightPageJustify(turn.from)
+                    }
+                    contentAlign={
+                      turn.dir === 1 ? rightContentAlign(turn.from) : "start"
+                    }
+                  />
+                </div>
               </div>
               <div className="duo-flip-face duo-flip-face-back">
-                <Page
-                  number={turn.dir === 1 ? duoSpreads[turn.to].number : undefined}
-                  title={turn.dir === 1 ? duoSpreads[turn.to].title : undefined}
-                  blocks={
-                    turn.dir === 1
-                      ? duoSpreads[turn.to].left
-                      : duoSpreads[turn.to].right
-                  }
-                  showHeading={turn.dir === 1}
-                  justify={
-                    turn.dir === 1
-                      ? leftPageJustify(turn.to)
-                      : rightPageJustify(turn.to)
-                  }
-                  contentAlign={
-                    turn.dir === -1 ? rightContentAlign(turn.to) : "start"
-                  }
-                />
+                <div className="duo-flip-face-content">
+                  <Page
+                    number={turn.dir === 1 ? duoSpreads[turn.to].number : undefined}
+                    title={turn.dir === 1 ? duoSpreads[turn.to].title : undefined}
+                    blocks={
+                      turn.dir === 1
+                        ? duoSpreads[turn.to].left
+                        : duoSpreads[turn.to].right
+                    }
+                    showHeading={turn.dir === 1}
+                    justify={
+                      turn.dir === 1
+                        ? leftPageJustify(turn.to)
+                        : rightPageJustify(turn.to)
+                    }
+                    contentAlign={
+                      turn.dir === -1 ? rightContentAlign(turn.to) : "start"
+                    }
+                  />
+                </div>
               </div>
             </div>
           )}

@@ -539,28 +539,56 @@ body {
   right: -4px;
 }
 
+.duo-book-stage {
+  /* Named so we can hand-pair the -webkit- prefix — Tailwind's arbitrary
+     [perspective:2400px] utility emits the unprefixed property only, and
+     Safari's 3D compositor is unreliable without the prefixed twin. */
+  perspective: 2400px;
+  -webkit-perspective: 2400px;
+}
+
 .duo-flip-page {
   position: absolute;
   inset-block: 0;
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
   transition: transform 0.75s cubic-bezier(0.45, 0, 0.2, 1);
+  will-change: transform;
   z-index: 10;
 }
 
+/* The rotating face itself is kept structurally bare — position, the 3D
+   context, and backface-visibility only. Safari has long-standing bugs
+   where backface-visibility fails to cull a rotated face once the SAME
+   element also owns overflow clipping, a gradient/background, or a ::after
+   pseudo-element: the front face's (mirrored) text bleeds through past the
+   90deg mark instead of being hidden. A translateZ nudge forces each face
+   onto its own GPU layer, which further stabilizes the cull in Safari. */
 .duo-flip-face {
   position: absolute;
   inset: 0;
-  overflow: hidden;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  background: linear-gradient(160deg, #100e0b 0%, #0c0b0a 60%, #0a0908 100%);
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform: translateZ(0.5px);
 }
 
 .duo-flip-face-back {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(0.5px);
 }
 
-.duo-flip-face::after {
+/* All clipping/decoration lives one level in, on a plain (non-transformed)
+   child, so it never shares a compositing layer with the backface-hidden
+   element above. */
+.duo-flip-face-content {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(160deg, #100e0b 0%, #0c0b0a 60%, #0a0908 100%);
+}
+
+.duo-flip-face-content::after {
   content: "";
   position: absolute;
   inset: 0;
