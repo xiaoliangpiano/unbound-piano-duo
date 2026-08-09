@@ -125,6 +125,10 @@ export default function OpenBook({ onClose }: { onClose: () => void }) {
   }
 
   const current = duoSpreads[spreadIndex];
+  // The spread whose bridge image should be mounted right now: the target
+  // as soon as a turn begins (so its image has the full turn duration to
+  // decode), or the settled spread once no turn is in flight.
+  const bridgeSpread = turn ? duoSpreads[turn.to] : current;
 
   let leftSpread = current;
   let rightSpread = current;
@@ -196,12 +200,21 @@ export default function OpenBook({ onClose }: { onClose: () => void }) {
             />
           </button>
 
-          {!turn && current.centerImage && (
-            <div className="pointer-events-none absolute inset-x-[31%] top-[20%] z-[6]">
+          {/* Mounted (but invisible) for the target spread as soon as a turn
+              starts, so the browser has the full turn duration to fetch and
+              decode it — only made visible once the turn actually commits.
+              This avoids a bare, undecoded pop-in flash right after the page
+              finishes turning. */}
+          {bridgeSpread.centerImage && (
+            <div
+              className={`pointer-events-none absolute inset-x-[31%] top-[20%] z-[6] ${
+                turn ? "opacity-0" : "opacity-100"
+              }`}
+            >
               <CenterBridgeImage
-                src={current.centerImage.src}
-                aspect={current.centerImage.aspect}
-                objectPosition={current.centerImage.objectPosition}
+                src={bridgeSpread.centerImage.src}
+                aspect={bridgeSpread.centerImage.aspect}
+                objectPosition={bridgeSpread.centerImage.objectPosition}
                 className="w-full"
               />
             </div>
