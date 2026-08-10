@@ -2,8 +2,9 @@
 
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import Book from "./Book";
+import type { TheDuoDictionary } from "@/data/i18n";
 
-export default function TheDuo() {
+export default function TheDuo({ dict }: { dict: TheDuoDictionary }) {
   const { ref, isRevealed } = useScrollReveal<HTMLDivElement>(0.3);
 
   return (
@@ -15,20 +16,24 @@ export default function TheDuo() {
     >
       <div className="mx-auto flex w-full max-w-[var(--container-content)] flex-col items-center text-center">
         <span className="duo-landing-label text-sm font-medium uppercase tracking-[0.24em] text-[#A99783]">
-          The Duo
+          {dict.eyebrow}
         </span>
 
         <p className="mt-[var(--space-md)] flex max-w-[36ch] flex-col items-center text-[clamp(1.3rem,2.2vw+0.85rem,2.2rem)] font-semibold leading-[1.3] text-[#F4F3F0]">
           <span className="duo-slogan-line duo-slogan-line-1">
-            Connected, but not confined.
+            {dict.sloganLines[0]}
           </span>
           <span className="duo-slogan-line duo-slogan-line-2">
-            Together, but still free.
+            {dict.sloganLines[1]}
           </span>
         </p>
 
         <div className="mt-[clamp(2rem,6vh,4rem)]">
-          <Book />
+          <Book
+            spreads={dict.spreads}
+            closedBook={dict.closedBook}
+            openBook={dict.openBook}
+          />
         </div>
       </div>
     </div>

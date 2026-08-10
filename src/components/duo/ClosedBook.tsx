@@ -1,10 +1,18 @@
 "use client";
 
-export default function ClosedBook({ onOpen }: { onOpen: () => void }) {
+import type { ClosedBookDictionary } from "@/data/i18n";
+
+export default function ClosedBook({
+  onOpen,
+  dict,
+}: {
+  onOpen: () => void;
+  dict: ClosedBookDictionary;
+}) {
   return (
     <button
       type="button"
-      aria-label="Open the book"
+      aria-label={dict.openAriaLabel}
       onClick={onOpen}
       className="group relative flex flex-col items-center gap-[var(--space-md)] focus:outline-none"
     >
@@ -14,10 +22,10 @@ export default function ClosedBook({ onOpen }: { onOpen: () => void }) {
             <div className="duo-book-pages absolute inset-0 rounded-sm" aria-hidden="true" />
             <div className="duo-book-cover absolute inset-0 flex flex-col items-center justify-center gap-[var(--space-2xs)] rounded-sm">
               <span className="text-xl font-semibold uppercase tracking-[0.15em] text-[#F4F3F0] md:text-2xl">
-                Unbound
+                {dict.title}
               </span>
               <span className="text-xs uppercase tracking-[0.3em] text-[#A99783]">
-                Our Story
+                {dict.subtitle}
               </span>
             </div>
           </div>
@@ -42,7 +50,7 @@ export default function ClosedBook({ onOpen }: { onOpen: () => void }) {
             strokeLinejoin="round"
           />
         </svg>
-        Open Book
+        {dict.openLabel}
       </span>
     </button>
   );

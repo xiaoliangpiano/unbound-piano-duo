@@ -1,10 +1,12 @@
 "use client";
 
+import { Fragment } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { CONTACT_ARTISTS } from "@/data/contact";
 import ArtistContact from "./ArtistContact";
+import type { ContactDictionary } from "@/data/i18n";
 
-export default function Contact() {
+export default function Contact({ dict }: { dict: ContactDictionary }) {
   const { ref, isRevealed } = useScrollReveal<HTMLDivElement>(0.25);
 
   return (
@@ -16,23 +18,26 @@ export default function Contact() {
     >
       <div className="mx-auto flex w-full max-w-[var(--container-content)] flex-col items-center text-center">
         <span className="contact-label text-sm font-medium uppercase tracking-[0.24em] text-[#A99783]">
-          Contact
+          {dict.eyebrow}
         </span>
 
         <h2 className="contact-statement mt-[var(--space-3xs)] text-[clamp(1.6rem,0.83vw+1.75rem,2.75rem)] font-semibold uppercase leading-[1.1] tracking-tight text-[#F4F3F0]">
-          Let&rsquo;s Create
-          <br />
-          Something Together.
+          {dict.statementLines.map((line, index) => (
+            <Fragment key={index}>
+              {index > 0 && <br />}
+              {line}
+            </Fragment>
+          ))}
         </h2>
 
         <p className="contact-subtitle mt-[var(--space-2xs)] max-w-[38ch] text-base leading-relaxed text-[#A99783] md:text-lg">
-          For performances, collaborations, presentations, and project inquiries.
+          {dict.subtitle}
         </p>
       </div>
 
       <div className="contact-artists mx-auto mt-[clamp(0.75rem,1.5vh,1.25rem)] grid w-full max-w-[760px] grid-cols-1 gap-x-[clamp(2rem,6vw,3.5rem)] gap-y-[clamp(2.25rem,7vh,3.25rem)] md:grid-cols-2">
         {CONTACT_ARTISTS.map((artist) => (
-          <ArtistContact key={artist.id} artist={artist} />
+          <ArtistContact key={artist.id} artist={artist} dict={dict} />
         ))}
       </div>
     </div>

@@ -3,10 +3,20 @@
 import { useEffect, useState } from "react";
 import ClosedBook from "./ClosedBook";
 import OpenBook from "./OpenBook";
+import type { DuoSpread } from "@/data/duo";
+import type { ClosedBookDictionary, OpenBookDictionary } from "@/data/i18n";
 
 const CLOSE_TRANSITION_MS = 450;
 
-export default function Book() {
+export default function Book({
+  spreads,
+  closedBook,
+  openBook,
+}: {
+  spreads: DuoSpread[];
+  closedBook: ClosedBookDictionary;
+  openBook: OpenBookDictionary;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -48,18 +58,18 @@ export default function Book() {
 
   return (
     <>
-      <ClosedBook onOpen={() => setIsOpen(true)} />
+      <ClosedBook onOpen={() => setIsOpen(true)} dict={closedBook} />
 
       {isOpen && (
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="The Duo — Our Story"
+          aria-label={openBook.dialogLabel}
           className={`duo-book-overlay fixed inset-0 z-[var(--z-modal)] flex flex-col items-center justify-center bg-[#0c0b0a] ${
             isVisible ? "duo-book-overlay-in" : ""
           }`}
         >
-          <OpenBook onClose={handleClose} />
+          <OpenBook onClose={handleClose} spreads={spreads} dict={openBook} />
         </div>
       )}
     </>

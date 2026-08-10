@@ -1,7 +1,16 @@
 import Image from "next/image";
 import type { ContactArtist } from "@/data/contact";
+import type { ContactDictionary } from "@/data/i18n";
 
-export default function ArtistContact({ artist }: { artist: ContactArtist }) {
+export default function ArtistContact({
+  artist,
+  dict,
+}: {
+  artist: ContactArtist;
+  dict: ContactDictionary;
+}) {
+  const displayName = dict.artistNames[artist.id] ?? artist.name;
+
   return (
     <div className="flex flex-col items-center text-center">
       <div className="contact-portrait-frame relative w-full max-w-[210px] overflow-hidden md:max-w-[250px]">
@@ -21,11 +30,12 @@ export default function ArtistContact({ artist }: { artist: ContactArtist }) {
       </div>
 
       <h3 className="mt-[var(--space-2xs)] text-lg font-semibold uppercase tracking-[0.04em] text-[#F4F3F0] md:text-xl">
-        {artist.name}
+        {displayName}
       </h3>
 
       <div className="mt-[var(--space-2xs)] flex flex-col items-center gap-[var(--space-3xs)]">
         <a href={`mailto:${artist.email}`} className="contact-link">
+          {dict.emailPrefix}
           {artist.email}
         </a>
         <a
@@ -34,6 +44,7 @@ export default function ArtistContact({ artist }: { artist: ContactArtist }) {
           rel="noopener noreferrer"
           className="contact-link"
         >
+          {dict.websitePrefix}
           {artist.website.label}
         </a>
       </div>

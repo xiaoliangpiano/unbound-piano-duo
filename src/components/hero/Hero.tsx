@@ -1,21 +1,27 @@
 import Image from "next/image";
+import { Fragment } from "react";
+import type { HeroDictionary } from "@/data/i18n";
 
-export default function Hero() {
+export default function Hero({ dict }: { dict: HeroDictionary }) {
   return (
     <div className="hero-in relative flex h-screen w-full flex-col overflow-hidden bg-black md:flex-row">
       <div className="relative z-10 flex w-full flex-1 flex-col justify-between px-[var(--space-lg)] pt-[6.5rem] pb-[var(--space-lg)] md:w-[42%] md:px-[var(--space-xl)] md:pt-[7.5rem] md:pb-[var(--space-2xl)]">
         <div className="flex flex-1 flex-col justify-center">
           <h1 className="hero-headline-in text-[clamp(2.5rem,4vw+1.25rem,4.5rem)] font-semibold uppercase leading-[1.05] tracking-tight text-[#F4F3F0]">
-            Unbound
-            <br />
-            Piano Duo
+            {dict.headline.map((line, index) => (
+              <Fragment key={index}>
+                {index > 0 && <br />}
+                {line}
+              </Fragment>
+            ))}
           </h1>
           <p className="hero-subtitle-in mt-[var(--space-md)] max-w-[26ch] text-[1.75rem] leading-[1.35] tracking-normal text-[#A99783] md:text-[2rem]">
-            Distinct voices.
-            <br />
-            Shared music.
-            <br />
-            Unbound.
+            {dict.subtitle.map((line, index) => (
+              <Fragment key={index}>
+                {index > 0 && <br />}
+                {line}
+              </Fragment>
+            ))}
           </p>
         </div>
 

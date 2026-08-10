@@ -11,8 +11,9 @@ import {
   getYearRange,
   sortPerformancesByDate,
 } from "@/lib/calendar";
+import type { CalendarDictionary } from "@/data/i18n";
 
-export default function Calendar() {
+export default function Calendar({ dict }: { dict: CalendarDictionary }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
   const [hoveredDate, setHoveredDate] = useState<string | null>(null);
@@ -54,10 +55,10 @@ export default function Calendar() {
         <div className="cal-title-in flex flex-col items-start justify-between gap-[var(--space-md)] md:flex-row md:items-end">
           <div>
             <h2 className="text-[clamp(2.25rem,3.5vw+1rem,3.75rem)] font-semibold uppercase leading-[1.05] tracking-tight text-[#F4F3F0]">
-              Calendar
+              {dict.title}
             </h2>
             <p className="mt-[var(--space-2xs)] text-sm font-medium uppercase tracking-[0.24em] text-[#A99783]">
-              On the Road
+              {dict.eyebrow}
             </p>
           </div>
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-[#6B6862]">
@@ -69,7 +70,9 @@ export default function Calendar() {
           <div className="cal-next-in mt-[clamp(1rem,3vh,1.75rem)] md:grid md:grid-cols-12 md:items-center md:gap-[var(--space-2xl)]">
             <div className="max-w-[46ch] md:col-span-5">
               <span className="text-sm font-medium uppercase tracking-[0.24em] text-[#A99783]">
-                {isShowingNextStop ? "Next Stop" : formatAbbreviatedDate(activeStop.date)}
+                {isShowingNextStop
+                  ? dict.nextStopLabel
+                  : formatAbbreviatedDate(activeStop.date)}
               </span>
               <h3 className="mt-[var(--space-2xs)] text-[clamp(1.75rem,2.5vw+1rem,2.75rem)] font-semibold leading-[1.1] text-[#F4F3F0]">
                 {activeStop.venue}

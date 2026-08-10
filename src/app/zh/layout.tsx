@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
+import { getDictionary } from "@/data/i18n";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,17 +13,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const dict = getDictionary("zh");
+
 export const metadata: Metadata = {
-  title: "Unbound Piano Duo",
+  title: dict.siteTitle,
 };
 
+// A separate root layout from src/app/(en)/layout.tsx (Next.js "multiple
+// root layouts" pattern) — this is what lets each locale set its own
+// <html lang> without a client-side hack. See src/app/(en)/layout.tsx for
+// the counterpart.
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang={dict.htmlLang} className="dark scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

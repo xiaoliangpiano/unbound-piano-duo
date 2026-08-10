@@ -15,10 +15,13 @@ const PANEL_MARGIN = 8; // px kept between a panel's outer edge and the stage ed
 
 interface FiveElementsRingProps {
   onSelectElement?: (element: FiveElement) => void;
+  /** Defaults to the English labels so existing callers are unaffected. */
+  elements?: FiveElement[];
 }
 
 export default function FiveElementsRing({
   onSelectElement,
+  elements = FIVE_ELEMENTS,
 }: FiveElementsRingProps) {
   const stageRef = useRef<HTMLDivElement>(null);
   const panelRefs = useRef(new Map<string, HTMLButtonElement>());
@@ -37,11 +40,11 @@ export default function FiveElementsRing({
   const [activeElementId, setActiveElementId] = useState<string | null>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  const angleStep = 360 / FIVE_ELEMENTS.length;
+  const angleStep = 360 / elements.length;
 
   const measure = useCallback(() => {
     const stage = stageRef.current;
-    const panel = panelRefs.current.get(FIVE_ELEMENTS[0].id);
+    const panel = panelRefs.current.get(elements[0].id);
     if (!stage || !panel) return;
     const stageRect = stage.getBoundingClientRect();
     const panelRect = panel.getBoundingClientRect();
@@ -49,7 +52,7 @@ export default function FiveElementsRing({
       x: Math.max((stageRect.width - panelRect.width) / 2 - PANEL_MARGIN, 0),
       y: Math.max((stageRect.height - panelRect.height) / 2 - PANEL_MARGIN, 0),
     };
-  }, []);
+  }, [elements]);
 
   useEffect(() => {
     measure();
@@ -66,7 +69,7 @@ export default function FiveElementsRing({
   const applyFrame = useCallback(() => {
     const { x: radiusX, y: radiusY } = radiusRef.current;
 
-    FIVE_ELEMENTS.forEach((element, i) => {
+    elements.forEach((element, i) => {
       const panel = panelRefs.current.get(element.id);
       if (!panel) return;
 
@@ -94,7 +97,7 @@ export default function FiveElementsRing({
       panel.style.filter = `brightness(${brightness})`;
       panel.style.zIndex = String(Math.round(depth * 100));
     });
-  }, [angleStep]);
+  }, [angleStep, elements]);
 
   useEffect(() => {
     // The loop always keeps running so a drag still repaints immediately
@@ -184,7 +187,7 @@ export default function FiveElementsRing({
       dragDistanceRef.current <= CLICK_DISTANCE_THRESHOLD &&
       pressedElementIdRef.current
     ) {
-      const element = FIVE_ELEMENTS.find(
+      const element = elements.find(
         (candidate) => candidate.id === pressedElementIdRef.current
       );
       if (element) handleSelect(element);
@@ -221,7 +224,7 @@ export default function FiveElementsRing({
       role="group"
       aria-label="Five Elements — interactive orbital ring. Drag to rotate, or tab through each element."
     >
-      {FIVE_ELEMENTS.map((element) => (
+      {elements.map((element) => (
         <button
           key={element.id}
           type="button"

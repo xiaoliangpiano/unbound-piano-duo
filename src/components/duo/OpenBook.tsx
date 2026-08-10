@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { duoSpreads } from "@/data/duo";
+import type { DuoSpread } from "@/data/duo";
+import type { OpenBookDictionary } from "@/data/i18n";
 import Page from "./Page";
 import Spread01Visual from "./Spread01Visual";
 import CenterBridgeImage from "./CenterBridgeImage";
@@ -42,7 +43,15 @@ function rightContentAlign(index: number): "start" | "end" {
   return index === 3 ? "end" : "start";
 }
 
-export default function OpenBook({ onClose }: { onClose: () => void }) {
+export default function OpenBook({
+  onClose,
+  spreads: duoSpreads,
+  dict,
+}: {
+  onClose: () => void;
+  spreads: DuoSpread[];
+  dict: OpenBookDictionary;
+}) {
   const [spreadIndex, setSpreadIndex] = useState(0);
   const [turn, setTurn] = useState<TurnState | null>(null);
   const [isDesktop, setIsDesktop] = useState(() =>
@@ -165,7 +174,7 @@ export default function OpenBook({ onClose }: { onClose: () => void }) {
 
           <button
             type="button"
-            aria-label="Previous page"
+            aria-label={dict.prevLabel}
             disabled={!canPrev}
             onClick={goPrev}
             className="duo-open-page relative w-1/2 rounded-l-sm disabled:cursor-default"
@@ -184,7 +193,7 @@ export default function OpenBook({ onClose }: { onClose: () => void }) {
 
           <button
             type="button"
-            aria-label="Next page"
+            aria-label={dict.nextLabel}
             disabled={!canNext}
             onClick={goNext}
             className="duo-open-page relative w-1/2 rounded-r-sm disabled:cursor-default"
@@ -325,7 +334,7 @@ export default function OpenBook({ onClose }: { onClose: () => void }) {
       <div className="flex items-center gap-[var(--space-lg)]">
         <button
           type="button"
-          aria-label="Previous page"
+          aria-label={dict.prevLabel}
           disabled={!canPrev}
           onClick={goPrev}
           className="duo-open-nav-arrow"
@@ -337,7 +346,7 @@ export default function OpenBook({ onClose }: { onClose: () => void }) {
         </span>
         <button
           type="button"
-          aria-label="Next page"
+          aria-label={dict.nextLabel}
           disabled={!canNext}
           onClick={goNext}
           className="duo-open-nav-arrow"
@@ -351,7 +360,7 @@ export default function OpenBook({ onClose }: { onClose: () => void }) {
         onClick={onClose}
         className="text-xs font-medium uppercase tracking-[0.24em] text-[#A99783] transition-colors duration-[var(--duration-slow)] hover:text-[#F4F3F0]"
       >
-        Close Book
+        {dict.closeLabel}
       </button>
     </div>
   );
