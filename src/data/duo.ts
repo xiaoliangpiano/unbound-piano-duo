@@ -4,9 +4,7 @@ export type PageBlock =
       type: "statement";
       lines: string[];
       scale?: "moderate" | "compact";
-      revealStagger?: boolean;
       weight?: "bold";
-      revealClass?: string;
     }
   | { type: "paragraph"; text: string; narrow?: boolean; revealClass?: string }
   | { type: "verse"; lines: string[] }
@@ -15,14 +13,12 @@ export type PageBlock =
   | {
       type: "emphasis";
       text: string;
-      typewriter?: boolean;
       scale?: "compact";
       spacious?: boolean;
     }
   | {
       type: "dominant";
       text: string;
-      emergeSlow?: boolean;
       shiftLeft?: number;
     }
   | { type: "slogan"; lines: string[] }
@@ -130,7 +126,6 @@ export const duoSpreads: DuoSpread[] = [
       {
         type: "emphasis",
         text: "And somewhere along the way, we began to notice something.",
-        typewriter: true,
       },
     ],
   },
@@ -163,7 +158,6 @@ export const duoSpreads: DuoSpread[] = [
       {
         type: "emphasis",
         text: "So we decided to create our own space for collaboration.",
-        typewriter: true,
         scale: "compact",
         spacious: true,
       },
@@ -177,14 +171,12 @@ export const duoSpreads: DuoSpread[] = [
       {
         type: "statement",
         lines: ["That space", "became"],
-        revealStagger: true,
       },
     ],
     right: [
       {
         type: "dominant",
         text: "Unbound.",
-        emergeSlow: true,
         shiftLeft: 28,
       },
     ],
@@ -197,7 +189,6 @@ export const duoSpreads: DuoSpread[] = [
       {
         type: "paragraph",
         text: "A piano duo requires collaboration.",
-        revealClass: "duo-s06-p1",
       },
       {
         type: "paragraph",
@@ -214,14 +205,12 @@ export const duoSpreads: DuoSpread[] = [
         lines: ["Bound together."],
         scale: "moderate",
         weight: "bold",
-        revealClass: "duo-s06-bound",
       },
     ],
     right: [
       {
         type: "paragraph",
         text: "But “Unbound” reminds us that collaboration does not require either voice to disappear.",
-        revealClass: "duo-s06-r1",
       },
       {
         type: "verse",

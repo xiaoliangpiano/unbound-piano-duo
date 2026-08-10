@@ -17,11 +17,11 @@ export default function Spread06Voices({
         fill="none"
       >
         <path
-          className="duo-s06-voice duo-s06-voice-a"
+          className="duo-s06-voice"
           d="M 20 58 C 120 52, 220 18, 320 22 C 400 25, 460 33, 560 35 C 680 37, 820 12, 980 18"
         />
         <path
-          className="duo-s06-voice duo-s06-voice-b"
+          className="duo-s06-voice"
           d="M 40 14 C 160 22, 260 45, 380 38 C 460 34, 520 30, 600 33 C 720 37, 840 55, 960 46"
         />
       </svg>

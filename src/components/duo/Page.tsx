@@ -1,6 +1,5 @@
 import Image from "next/image";
 import type { PageBlock } from "@/data/duo";
-import TypewriterText from "./TypewriterText";
 
 function Block({ block }: { block: PageBlock }) {
   switch (block.type) {
@@ -27,17 +26,11 @@ function Block({ block }: { block: PageBlock }) {
             : "text-[clamp(1.4rem,4.2vw,2.35rem)]";
       const weightClass = block.weight === "bold" ? "font-bold" : "font-semibold";
       return (
-        <div className={`flex flex-col gap-[0.05em] ${block.revealClass ?? ""}`}>
-          {block.lines.map((line, index) => (
+        <div className="flex flex-col gap-[0.05em]">
+          {block.lines.map((line) => (
             <span
               key={line}
-              className={`block ${sizeClass} ${weightClass} uppercase leading-[1.15] tracking-tight text-[#F4F3F0] ${
-                block.revealStagger
-                  ? index === 0
-                    ? "duo-s05-line-1"
-                    : "duo-s05-line-2"
-                  : ""
-              }`}
+              className={`block ${sizeClass} ${weightClass} uppercase leading-[1.15] tracking-tight text-[#F4F3F0]`}
             >
               {line}
             </span>
@@ -61,7 +54,9 @@ function Block({ block }: { block: PageBlock }) {
           {block.lines.map((line, index) => (
             <span
               key={line}
-              className={`block max-w-[32ch] text-[clamp(1rem,1.8vw,1.1875rem)] leading-snug text-[#F4F3F0] duo-s06-verse-${index + 1}`}
+              className={`block max-w-[32ch] text-[clamp(1rem,1.8vw,1.1875rem)] leading-snug text-[#F4F3F0] ${
+                index === 0 ? "duo-s06-verse-1" : ""
+              }`}
             >
               {line}
             </span>
@@ -104,10 +99,7 @@ function Block({ block }: { block: PageBlock }) {
       const className =
         `max-w-[34ch] ${sizeClass} font-medium leading-snug ${spacingClass}`.trim();
 
-      if (block.typewriter) {
-        return <TypewriterText text={block.text} className={className} />;
-      }
-      return <p className={`${className} text-[#F4F3F0]`}>{block.text}</p>;
+      return <p className={`${className} text-[#A99783]`}>{block.text}</p>;
     }
 
     case "dominant": {
@@ -118,16 +110,6 @@ function Block({ block }: { block: PageBlock }) {
         : undefined;
       const shiftClass = block.shiftLeft ? "duo-dominant-shift" : "";
 
-      if (block.emergeSlow) {
-        return (
-          <p
-            className={`${baseClasses} duo-s05-dominant ${shiftClass}`}
-            style={shiftStyle}
-          >
-            {block.text}
-          </p>
-        );
-      }
       return (
         <p
           className={`${baseClasses} tracking-tight text-[#F4F3F0] ${shiftClass}`}
@@ -167,6 +149,7 @@ function Block({ block }: { block: PageBlock }) {
                 sizes="(min-width: 768px) 260px, 100px"
                 style={{ objectPosition: "22% 30%" }}
                 className="duo-program-image object-cover"
+                priority
               />
               <div className="duo-program-mask" aria-hidden="true" />
             </div>
@@ -187,6 +170,7 @@ function Block({ block }: { block: PageBlock }) {
                 fill
                 sizes="(min-width: 768px) 210px, 150px"
                 className="duo-memory-image object-cover"
+                priority
               />
               <div className="duo-memory-image-mask" aria-hidden="true" />
             </div>
@@ -207,6 +191,7 @@ function Block({ block }: { block: PageBlock }) {
                 fill
                 sizes="(min-width: 768px) 130px, 62px"
                 className="object-cover"
+                priority
               />
             </div>
           </div>
@@ -240,7 +225,6 @@ export default function Page({
   showHeading = false,
   justify = "center",
   contentAlign = "start",
-  headingRevealClass,
   background,
 }: {
   number?: string;
@@ -249,7 +233,6 @@ export default function Page({
   showHeading?: boolean;
   justify?: "center" | "start" | "end";
   contentAlign?: "start" | "end";
-  headingRevealClass?: string;
   background?: React.ReactNode;
 }) {
   const hasTitle = Boolean(title);
@@ -268,9 +251,7 @@ export default function Page({
       >
         {showHeading && (number || title) && (
           <div
-            className={`${hasTitle ? "mb-[var(--space-lg)]" : "mb-[var(--space-xs)]"} ${
-              headingRevealClass ?? ""
-            }`}
+            className={hasTitle ? "mb-[var(--space-lg)]" : "mb-[var(--space-xs)]"}
           >
             {hasTitle ? (
               <div className="flex flex-wrap items-baseline gap-x-[var(--space-xs)] gap-y-[var(--space-3xs)]">

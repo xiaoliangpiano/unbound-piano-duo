@@ -6,6 +6,7 @@ import Page from "./Page";
 import Spread01Visual from "./Spread01Visual";
 import CenterBridgeImage from "./CenterBridgeImage";
 import Spread06Voices from "./Spread06Voices";
+import DuoAssetPreloader from "./DuoAssetPreloader";
 
 interface TurnState {
   dir: 1 | -1;
@@ -150,6 +151,7 @@ export default function OpenBook({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-[var(--space-lg)] px-[var(--space-lg)] py-[var(--space-lg)]">
+      <DuoAssetPreloader />
       {/* Desktop — two-page spread with real page-turn */}
       <div
         className="duo-book-stage relative hidden w-full max-w-[1000px] justify-center md:flex"
@@ -173,13 +175,6 @@ export default function OpenBook({ onClose }: { onClose: () => void }) {
               blocks={leftSpread.left}
               showHeading
               justify={leftPageJustify(leftIndex)}
-              headingRevealClass={
-                leftIndex === 4
-                  ? "duo-s05-heading"
-                  : leftIndex === 5
-                    ? "duo-s06-heading"
-                    : undefined
-              }
               background={leftIndex === 0 ? <Spread01Visual /> : undefined}
             />
           </button>
@@ -298,13 +293,6 @@ export default function OpenBook({ onClose }: { onClose: () => void }) {
               blocks={current.left}
               showHeading
               justify={leftPageJustify(spreadIndex)}
-              headingRevealClass={
-                spreadIndex === 4
-                  ? "duo-s05-heading"
-                  : spreadIndex === 5
-                    ? "duo-s06-heading"
-                    : undefined
-              }
               background={spreadIndex === 0 ? <Spread01Visual /> : undefined}
             />
           </div>
