@@ -149,12 +149,13 @@ export const duoSpreads: DuoSpread[] = [
         text: "Musicians on many other instruments seem to collaborate constantly: chamber music, orchestras, ensembles.",
         narrow: true,
       },
-    ],
-    right: [
       {
         type: "paragraph",
         text: "Pianists, by comparison, can spend a surprisingly large part of their musical lives alone.",
+        revealClass: "duo-s04-left-secondary",
       },
+    ],
+    right: [
       {
         type: "emphasis",
         text: "So we decided to create our own space for collaboration.",

@@ -764,6 +764,40 @@ body {
 }
 
 /* ==========================================================================
+   The Duo — Spread 04 layout
+   ========================================================================== */
+
+/* The "Pianists…" paragraph now lives at the bottom of the left page's
+   block stack. Pull it noticeably closer to the paragraph above it than
+   the page's default block gap, so it reads as a compact secondary line
+   rather than an evenly-spaced third item. */
+.duo-s04-left-secondary {
+  margin-top: calc(var(--space-sm) - var(--space-lg));
+}
+
+/* On mobile the bridge image is a separate, stacked block already, so the
+   default gap below it is enough. On desktop the image floats at a fixed,
+   deterministic position (see the centerImage wrapper in OpenBook.tsx:
+   top 20%, 38% wide, 16:9 — its bottom edge lands at ~54% of the spread's
+   height), so there we pull this line up to sit close underneath it
+   instead of leaving it pinned to the bottom of the page. */
+.duo-s04-emphasis {
+  margin-top: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+  .duo-s04-emphasis {
+    margin-top: 64%;
+  }
+}
+
+@media (min-width: 768px) and (max-height: 700px) {
+  .duo-s04-emphasis {
+    margin-top: 58%;
+  }
+}
+
+/* ==========================================================================
    The Duo — Spread 05 layout helper
    ========================================================================== */
 
@@ -783,21 +817,23 @@ body {
 
 /* Static from the first visible frame — no entrance animation. The two
    surviving classes carry real vertical-spacing values, so they stay
-   applied in the markup; everything else here is layout only. */
+   applied in the markup; everything else here is layout only. Values are
+   deliberately tighter than the page's default block gap alone would give,
+   so the whole spread reads as noticeably more compact. */
 .duo-s06-p2 {
-  margin-top: var(--space-xl);
+  margin-top: var(--space-md);
 }
 
 .duo-s06-p3 {
-  margin-top: var(--space-2xl);
+  margin-top: var(--space-lg);
 }
 
 .duo-s06-verse-1 {
-  margin-top: var(--space-2xl);
+  margin-top: var(--space-lg);
 }
 
 .duo-s06-slogan {
-  margin-top: var(--space-xl);
+  margin-top: var(--space-md);
 }
 
 .duo-s06-voice {
@@ -806,6 +842,18 @@ body {
   stroke-width: 1;
   stroke-linecap: round;
   opacity: 0.4;
+}
+
+@media (max-height: 700px) {
+  .duo-s06-p2,
+  .duo-s06-slogan {
+    margin-top: var(--space-sm);
+  }
+
+  .duo-s06-p3,
+  .duo-s06-verse-1 {
+    margin-top: var(--space-md);
+  }
 }
 
 /* ==========================================================================

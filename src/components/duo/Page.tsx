@@ -95,7 +95,7 @@ function Block({ block }: { block: PageBlock }) {
         block.scale === "compact"
           ? "text-[clamp(0.95rem,2vw,1.25rem)]"
           : "text-[clamp(1.05rem,2.2vw,1.375rem)]";
-      const spacingClass = block.spacious ? "mt-[var(--space-lg)]" : "";
+      const spacingClass = block.spacious ? "duo-s04-emphasis" : "";
       const className =
         `max-w-[34ch] ${sizeClass} font-medium leading-snug ${spacingClass}`.trim();
 

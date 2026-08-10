@@ -28,11 +28,12 @@ function leftPageJustify(index: number): "center" | "start" {
   return index === 0 || index === 3 || index === 5 ? "start" : "center";
 }
 
-// Spread 04 anchors its right page toward the bottom so the center
-// bridge image has room to sit in the middle of the spread. Spread 06
-// anchors to the top, leaving open space below for the voice lines.
+// Spread 04's right page anchors to the top; its one remaining line sits
+// close under the bridge image via .duo-s04-emphasis rather than being
+// pushed to the bottom of the page. Spread 06 also anchors to the top,
+// leaving open space below for the voice lines.
 function rightPageJustify(index: number): "center" | "end" | "start" {
-  return index === 3 ? "end" : index === 5 ? "start" : "center";
+  return index === 3 || index === 5 ? "start" : "center";
 }
 
 // Spread 04 also shifts its right-page text toward the outer edge of
@@ -297,7 +298,7 @@ export default function OpenBook({ onClose }: { onClose: () => void }) {
             />
           </div>
           {current.centerImage ? (
-            <div className="shrink-0 py-[var(--space-md)]">
+            <div className="shrink-0 py-[var(--space-sm)]">
               <CenterBridgeImage
                 src={current.centerImage.src}
                 aspect={current.centerImage.aspect}
