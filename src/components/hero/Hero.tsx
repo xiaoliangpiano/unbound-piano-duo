@@ -11,11 +11,11 @@ export default function Hero() {
             Piano Duo
           </h1>
           <p className="hero-subtitle-in mt-[var(--space-md)] max-w-[26ch] text-[1.75rem] leading-[1.35] tracking-normal text-[#A99783] md:text-[2rem]">
-            Reimagining piano four-hands
+            Distinct voices.
             <br />
-            performance for contemporary
+            Shared music.
             <br />
-            audiences.
+            Unbound.
           </p>
         </div>
 
